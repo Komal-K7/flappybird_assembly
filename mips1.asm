@@ -10,26 +10,19 @@
 .data
 	displayAddress:	.word	0x10008000
 .text
-	lw $t0, displayAddress	# $t0 stores the base address for display
-li      $t1, 0x2ca0b8     #Loading RED in register
+lw $t0, displayAddress	# $t0 stores the base address for display
+li      $t1, 0x2ca0b8     #Loading BLUE in register
 li      $t2, 0x2cb870     #Loading GREEN in register
 big_loop:
     move  $a0, $gp
     # 14 red rows with yellow endings+starts
-    li      $t0, 31
+    li      $t0, 32
 red_rows_loop:
-    li      $a1, 31
+    li      $a1, 32
     move    $a2, $t1
     jal     setPixels           # set 30 red pixels in middle
-    #sw      $t2, ($a0)          # set 1 yellow at end, and 1 at start of next row
-    #sw      $t2, 4($a0)
-    #addi    $a0, $a0, 8
     addi    $t0, $t0, -1
     bnez    $t0, red_rows_loop
-    # finish last row to be full yellow
-    li      $a1, 31           # 31 pixels more needed (1 is already there)
-    move    $a2, $t1            # yellow
-    jal     setPixels
 
     li      $v0, 32             # MARS service delay(ms)
     li      $a0, 40             # 40ms = ~25 FPS if the draw would be instant
