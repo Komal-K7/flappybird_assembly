@@ -36,7 +36,7 @@ blue_rows_loop:
     #addiu   $t1, $t1, 0xFE0408  # adjust main color (red -2, green +4, blue +8 + overflows (B -> G -> R)
     #andi    $t1, $t1, 0xFFFFFF  # force "alpha" to zero
     add $t4, $t4, 1
-    bge $t4, 30, reset 
+    bge $t4, 33, reset 
     j       big_loop           # infinite loop will animated colours...
 
 # Sets $a1 pixels to $a2 value starting at $a0 (memory fill)
